@@ -17,72 +17,72 @@ def main():
     gerar_dicionario()
     # Usar o set para aprimorar a velocidade
     hash_set = set()
-    print("-- Hashing started --")
+    print("-- Colisões Hashing iniciadas --")
     # Tempo
-    start_time = time.time()
-    # The input message.
-    collision_count = 0
+    inicio_tempo = time.time()
+    # Mensagem
+    contador_colisoes = 0
 
-    total_duration = 0
+    duracao_total = 0
 
-    file = open('dictionary.txt', 'r')
+    arquivo = open('dictionary.txt', 'r')
 
-    for msg in file:
-        # Delete \n at the end of string.
+    for msg in arquivo:
+        # Deleta o \n no final da string.
         msg = msg.rstrip()
-        # Message in bytes.
+        # Messagem em bytes
         byte_str = msg.encode()
-        # Hash object constructor, with hash length=3 bytes (24 bits).
+        # Construtor de objeto hash, com hash lenght=3 bytes (24 bits)
         digest = blake2b(byte_str, digest_size=tamanho_hash)
         # Generate the message digest.
         hashed_msg = digest.hexdigest()
 
         if hashed_msg in hash_set:
-            # Get collision time duration.
-            duration = time.time() - start_time
+            # Pegar a duração das colisões
+            duration = time.time() - inicio_tempo
             # print("Found a collision - word: {} -> hash: {} in {} seconds.".format(msg, hashed_msg, duration))
-            # Empty the hash in every collision.
+            # Limpa a hash a cada colisão
             hash_set = set()
-            # Restart timer.
-            start_time = time.time()
-            collision_count += 1
-            total_duration += duration
+            # Reincia o timer
+            inicio_tempo = time.time()
+            contador_colisoes += 1
+            duracao_total += duration
 
-        if collision_count == tentativas:
-            total_duration = total_duration / tentativas
+        if contador_colisoes == tentativas:
+            duracao_total = duracao_total / tentativas
             print("Collisions found: {}".format(tentativas))
-            print("Average collision found time : {} seconds.".format(total_duration))
+            print("Average collision found time : {} seconds.".format(duracao_total))
             return
 
-        # Adds a new hash value to the set.
+        # Add um novo valor hash para setar
         hash_set.add(hashed_msg)
 
-    if collision_count != 0:
-        total_duration = total_duration / collision_count
-        print("Collisions found: {}".format(collision_count))
-        print("Average collision found time: {} seconds.".format(total_duration))
+    if contador_colisoes != 0:
+        duracao_total = duracao_total / contador_colisoes
+        print("Colisões encontradas: {}".format(contador_colisoes))
+        print("Tempo estimado das colisões: {} segundos.".format(duracao_total))
 
     else:
-        print("No collisions found!")
+        print("Nenhuma colisão encontrada!")
 
 
-# Generate a dictionary file. If it already exist, then only reads from it.
+# Gera um arquivo dicionário. Se já existir, ele apenas lê.
 def gerar_dicionario():
     try:
-        # Check if the dictionary file exist.
-        file = open('dictionary.txt', 'r')
-        print("Opening dictionary ...")
-        file.close()
+        # Verificar se o arquivo existe.
+        arquivo = open('dictionary.txt', 'r')
+        print("Abrindo dicionário ...")
+        arquivo.close()
         return
     except IOError:
-        print("Generating dictionary ...")
+        print("Gerando dicionário ...")
 
-    file = open('dictionary.txt', 'w')
+    arquivo = open('dictionary.txt', 'w')
 
-    # All possible combinations of n=tam_palavras letters.
+    # Todas as combinações possível de n=tam_palavras.
     for i in product(ascii_letters, repeat=tam_palavras):
-        file.write(''.join(i) + '\n')
-    file.close()
+        arquivo.write(''.join(i) + '\n')
+    arquivo.close()
 
 
 if __name__ == '__main__':
