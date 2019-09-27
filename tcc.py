@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+ -*- coding: UTF-8 -*-
 texto = "O Fulano de Tal é uma pessoa (legal, gente boa, simpatica) e (etc, etc)"
 adjetivos = []
 #ajetivos = [[0, 0, 0], [0, 0, 0]]
