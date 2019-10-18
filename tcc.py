@@ -1,17 +1,33 @@
- -*- coding: UTF-8 -*-
+#-*- coding: UTF-8 -*-
 texto = "O Fulano de Tal é uma pessoa (legal, gente boa, simpatica) e (etc, etc)"
 adjetivos = []
-#ajetivos = [[0, 0, 0], [0, 0, 0]]
+textoConverte = "O Fulano de Tal é uma pessoa <t0>, mas, também é <t1>, sendo assim, eu considero ela como sendo muito <t2>. Eu <t3> essa pessoa."
+linha = [] # cria uma linha para a matriz
+
+
+def converteTexto():
+    estado = "fora"
+    x = 0
+    for i in textoConverte:
+        if estado == "fora":
+            if i == "<":
+                estado = "dentro"
+                
+        elif estado == "dentro":
+          if i == ">":
+            converter = i.replace(i, textoConverte[x])
+            x += 1
 
 def identificaParenteses():
     global adjetivos
+    global linha
 
     adjetivo = ""
     estado = "fora"
 
 
     for t in texto:
-        linha = [] # cria uma linha para a matriz
+        
         quant_linhas = len(adjetivos)
 
         if estado == "fora":
@@ -22,17 +38,19 @@ def identificaParenteses():
         elif estado == "dentro":
             if t == ")":
                 adjetivos.append(adjetivo)
-                adjetivos.append(linha)
                 estado = "fora"
                 
 
             elif t == ",":
                 adjetivos.append(adjetivo)
+                linha.append(adjetivos)
                 adjetivo = ""
 
             else:
                 adjetivo += t
+                
 
 
 identificaParenteses()
-print(adjetivos)
+converteTexto()
+print(textoConverte)
