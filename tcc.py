@@ -57,7 +57,7 @@ def identificaParenteses():
 
             elif t == ",":
                 adjetivos.append(adjetivo)
-                linha.append(adjetivos)
+                adjetivos.append(linha)
                 adjetivo = ""
 
             else:
