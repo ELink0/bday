@@ -7,6 +7,8 @@ textoConverte = "O Fulano de Tal é uma pessoa <t0>, mas, também é <t1>, sendo
 linha = [] # cria uma linha para a matriz
 
 
+# Estudar algoritmos de permutação
+
 def converteTexto():
     global adjetivos
     global textoConverte
