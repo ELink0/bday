@@ -1,38 +1,30 @@
 #-*- coding: UTF-8 -*-
-import random 
+import random
 
 texto = "O Fulano de Tal é uma pessoa (legal, gente boa, simpatica) e (etc, etc)"
 adjetivos = []
-textoConverte = "O Fulano de Tal é uma pessoa <t0>, mas, também é <t1>, sendo assim, eu considero ela como sendo muito <t2>. Eu <t3> essa pessoa."
-linha = [] # cria uma linha para a matriz
-
-
-# Estudar algoritmos de permutação
+textoConverte = []
+converteString = "".join(textoConverte)
+linha = []
 
 def converteTexto():
     global adjetivos
     global textoConverte
-
-    estado = "fora"
     x = 0
 
-    for i in textoConverte:
-        if i == "<":
-            if estado == "fora":
-                estado = "dentro"
-                
-        elif estado == "dentro":
-            if i == ">":
-                estado = "fora"
-                x = 0
+    for i in texto:
+        if i == "(":
+            add = i.split("<")
+            x += 1
+        
+        if i == " ":
+            leitorTexto = textoConverte.append(" ")
 
-            elif i == "t":
-                i[i] = ''
-                i = random.choise(adjetivos)
-                x += 1
-            elif i == x:
-                i[i] = ''
+        if i == ", ":
+            leitorTexto = textoConverte.append("")
 
+        if i == ")":
+            leitorTexto = textoConverte.append(x + ">")
 
 def identificaParenteses():
     global adjetivos
@@ -43,9 +35,6 @@ def identificaParenteses():
 
 
     for t in texto:
-        
-        quant_linhas = len(adjetivos)
-
         if estado == "fora":
             if t == "(":
                 estado = "dentro"
@@ -55,7 +44,6 @@ def identificaParenteses():
             if t == ")":
                 adjetivos.append(adjetivo)
                 estado = "fora"
-                
 
             elif t == ",":
                 adjetivos.append(adjetivo)
@@ -64,7 +52,7 @@ def identificaParenteses():
 
             else:
                 adjetivo += t
-                
+
 
 converteTexto()
 print(textoConverte)
