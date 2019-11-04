@@ -1,10 +1,9 @@
 #-*- coding: UTF-8 -*-
 import random
 
-texto = "O Fulano de Tal é uma pessoa (legal, gente boa, simpatica) e (etc, etc)"
+texto = "O Fulano de Tal é uma pessoa (legal, gente boa, simpatica) e (etc, etc). Ele também é muito (trabalhador, criativo, educado) faz parte de uma família (muito boa, excelente, renomada)"
 adjetivos = []
 textoConverte = []
-converteString = "".join(textoConverte)
 linha = []
 
 def converteTexto():
@@ -14,17 +13,22 @@ def converteTexto():
 
     for i in texto:
         if i == "(":
-            add = i.split("<")
+            leitorTexto = textoConverte.append("<")
+            leitorTexto = textoConverte.append("t")
             x += 1
-        
-        if i == " ":
-            leitorTexto = textoConverte.append(" ")
 
         if i == ", ":
             leitorTexto = textoConverte.append("")
 
         if i == ")":
-            leitorTexto = textoConverte.append(x + ">")
+            leitorTexto = textoConverte.append(">")
+            x = 0
+
+        if x > 0:
+            x =+ 1
+        
+        else:
+            leitorTexto = textoConverte.append(i)
 
 def identificaParenteses():
     global adjetivos
@@ -55,4 +59,4 @@ def identificaParenteses():
 
 
 converteTexto()
-print(textoConverte)
+print(''.join(textoConverte).replace("'", ""))
